@@ -5,7 +5,7 @@ nome, cpf = CadastroCliente()
 validacao = ValidarCPF(cpf)
 
 if validacao:
-    saldo = CadastroConta(cliente,cpf)
+    saldo = CadastroConta(nome,cpf)
     
     if saldo >= 50:
-        Conta(saldo,cliente)
+        Conta(saldo,nome)
