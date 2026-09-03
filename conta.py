@@ -35,8 +35,8 @@ Não foi possível entrar na conta pois o valor é inferior ao mínimo.""")
 def Conta(saldo,nome,cpf):
 
     #Menu de escolha
-    print(f"""  Conta de {nome}
-    N° da Conta: {cpf}    
+    print(f"""Conta de {nome}
+N° da Conta: {cpf}    
 Menu de Serviços:
 1- Saldo
 2- Depósito
