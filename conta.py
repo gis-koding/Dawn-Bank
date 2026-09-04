@@ -1,100 +1,76 @@
 def CadastroConta(nome,cpf):
     
-    print("""Conta Cadastrada com Sucesso!
-Deseja realizar um depósito de R$50,00 para acessar sua conta? 
-s/n""")
-    resposta = input() #confirmação da ação
-
-    #Confirmado
+    print('Conta Cadastrada com Sucesso!')
+    resposta = input('Deseja realizar um depósito de R$50,00 para acessar sua conta?  ') 
+    
+    #confirmação da ação
     if resposta == "s":
-        print("Digite o valor a ser depositado:")
-        valor = float(input())
-
-        #Para saber se o valor digitado está correto
+        valor = float(input('Digite o valor a ser depositado: '))
         if valor >= 50.00:
             saldo = valor
-            print("""Depósito feito com sucesso!
-Entrando na conta...""")
+            print('Depósito feito com sucesso!')
             return saldo
         else:
             saldo = valor
-            print("""Depósito feito com sucesso!
-Não foi possível entrar na conta pois o valor é inferior ao mínimo.""")
-
-    #Cancelado
+            print('Depósito feito com sucesso! Conta Bloqueada pois valor menor que mínimo.')
     elif resposta == "n":
-        print("Conta Bloqueada!")
-        
-    #Qualquer outra resposta 
+        print('Conta Bloqueada!')
     else:
-        print("Resposta inválida.")
+        print('Inválido.')
 
+def Saldo(saldo):
+    return print(f'Saldo = R${saldo}')
 
+def Depósito(saldo):
+     
+        valor = float(input('Digite o valor para depositar: '))
 
+        #confirmação da ação
+        print(f'Deseja depositar o valor de R${valor} na sua conta?') #sim ou não, confirmar ou cancelar
+        confirmacao = input()
+        if confirmacao == "s":
+            saldo += valor
+            return print('Seu depósito foi concluído com sucesso! Saldo atual: R${saldo}')
+        elif confirmacao == "n":
+            return print('Depósito Cancelado.')
+        else: 
+            return print('Inválido.')
+        
+def Saque(saldo):
+    
+        valor = float(input('Qual valor deseja retirar?'))
+
+        #confirmação da ação
+        confirmacao = input(f'Deseja retirar o valor de R${valor}?')
+        if confirmacao == "s":
+            if valor < saldo:
+                saldo = saldo - valor
+                print(f'Saque realizado com sucesso! Saldo atual: R${saldo}')
+            else:
+                print('Saldo insuficiente ou valor não existe.')
+        elif confirmacao == "n":
+            print('Saque não realizado.')
+        else:
+            print('Inválido.')
+            
 #Lembrar: no lugar do cpf incluir numero aleatorio
 def Conta(saldo,nome,cpf):
 
-    #Menu de escolha
-    print(f"""Conta de {nome}
+    print(f'''Conta de {nome}
 N° da Conta: {cpf}    
 Menu de Serviços:
 1- Saldo
 2- Depósito
-3- Saque
-4- Sair""")
-    funcao = int(input("Digite o número do serviço: "))
+3- Saque''')
+    funcao = int(input('Digite o número do serviço: '))
 
-    #Saldo
     if funcao == 1:
-        print(f"Saldo = R${saldo}")
-
-    #Depósito
+        Saldo(saldo)
     elif funcao == 2:
-    
-        print("Digite o valor para depositar: ")
-        valor = float(input())
-        print(f"""Deseja depositar o valor de R${valor} na sua conta?
-s/n""") #sim ou não, confirmar ou cancelar
-
-        confirmacao = input()
-        #Confirmado
-        if confirmacao == "s":
-            saldo += valor
-            print("Seu depósito foi concluído com sucesso!")
-            print(f"Saldo atual: R${saldo}")
-        #Cancelado
-        elif confirmacao == "n":
-            print("Depósito Cancelado")
-        #QR
-        else: 
-            print("Resposta inválida.")
-
-    #Saque
+        Depósito(saldo)
     elif funcao == 3:
-    
-        print("Qual valor deseja retirar?")
-        valor = float(input())
-        print(f"""Deseja retirar o valor de R${valor}?
-s/n""")
-
-        confirmacao = input()
-        if confirmacao == "s":
-            if valor < saldo:
-                saldo = saldo - valor
-                print("Saque realizado com sucesso!")
-                print(f"Saldo atual: R${saldo}")
-            else:
-                print("Saldo insuficiente ou valor não existe.")
-        elif confirmacao == "n":
-            print("Saque não realizado.")
-        else:
-            print("Resposta inválida.")
-            
-    #Sair
-    elif funcao == 4:
-        print("Saindo da conta...")
-        
-    #QR
+        Saque(saldo)
     else:
-        print("Resposta inválida.")
-            
+        print('Inválido.')
+
+        
