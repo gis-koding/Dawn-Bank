@@ -1,36 +1,51 @@
 def CadastroCliente():
-    nome = input()
-    cpf = input()
+    nome = input("Nome:")
+    cpf = input("CPF: ")
+    #caso o cliente digite um cpf inválido:
+    while not ValidarCPF(cpf): #not True: False; not False: True! 
+        cpf = input ("CPF: ")
     return nome,cpf 
-
+#função testada!
 def ValidarCPF(cpf):
     cpf = cpf.replace(".","").replace("-","").replace(" ", "")
     if len(cpf) != 11 or not cpf.isdigit():
-    	return False
+        return False #não permitido
+    #se for permitido, hora de verificar os dígitos
+    digitos = []
+    for numero in cpf: 
+        digitos.append(int(numero))  #coloco os digitos cpf numa lista
     
-    d1 = int(cpf[0]); d2 = int(cpf[1]); d3 = int(cpf[2])
-    d4 = int(cpf[3]); d5 = int(cpf[4]); d6 = int(cpf[5])
-    d7 = int(cpf[6]); d8 = int(cpf[7]); d9 = int(cpf[8])
-    d10 = int(cpf[9]); d11 = int(cpf[10])
-        
-    if not (d1 == d2 == d3 == d4 == d5 == d6 == d7 == d8 == d9 == d10 == d11): 
-        soma1 = ((d1*10) + (d2*9) + (d3*8) + (d4*7) + (d5*6) + (d6*5) + (d7*4) + (d8*3) + (d9*2)) 
-        resto1 = soma1 % 11 
-        if resto1 < 2:
-            digito1 = 0
-        else:
-            digito1 = 11 - resto1
-        
-        soma2 = ((d1*11) + (d2*10) + (d3*9) + (d4*8) + (d5*7) + (d6*6) + (d7*5) + (d8*4) + (d9*3) + (d10*2)) 
-        resto2 = soma2 % 11
-        if resto2 < 2:
-        	digito2 = 0
-        else:
-        	digito2 = 11 - resto2
-        
-        if digito1 == d10 and digito2 == d11:
-        	return True
-        else:
-        	return False
+    tudo_igual = True #flag, para mudar no for
+    for inteiro in digitos:
+        if digitos[0] != inteiro: 
+            tudo_igual = False #checo se tem digitos diferentes; 
+    if tudo_igual: 
+        return False #não é válido !
+    #primeira verificação, digito1
+    soma = 0 
+    peso = 10 #faz parte da soma, é 10 e decresce;
+    for i in range(0,9): #do 1 ao 9
+        soma += digitos[i] * peso
+        peso -= 1 #para decrescer o 10
+    resto1 = soma % 11 #mesma etapa 
+    if resto1 < 2:
+        digito1 = 0 #primeiro digito verificador
     else:
-        return False
+        digito1 = 11 - resto1
+    
+    #segunda verificação, para digito2
+    soma2 = 0
+    peso2 = 11
+    for a in range(0,10):
+        soma2 += digitos[a] * peso2
+        peso2 -= 1
+    resto2 = soma2 % 11 
+    if resto2 < 2:
+        digito2 = 0 #segundo digito verificador
+    else:
+        digito2 = 11 - resto2
+                
+    if digito1 == digitos[9] and digito2 == digitos[10]: #digito 10 e 11
+        return True #é válido
+    else:
+        return False #não é válido
