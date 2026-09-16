@@ -1,10 +1,16 @@
-def CadastroCliente():
+def CadastroCliente(): #prestar atenção na ordem da chamada da função
+    #o cliente 
     nome = input("Nome:")
     cpf = input("CPF: ")
     #caso o cliente digite um cpf inválido:
     while not ValidarCPF(cpf): #not True: False; not False: True! 
         cpf = input ("CPF: ")
     return nome,cpf 
+
+def AdicionaCliente(listadosnomes, listadoscpfs, nome, cpf):
+    listadosnomes.append(nome) #adiciona o nome a lista de nomes
+    listadoscpfs.append(cpf) #adiciona o cpf a lista do cpf, na ordem.
+
 #função testada!
 def ValidarCPF(cpf):
     cpf = cpf.replace(".","").replace("-","").replace(" ", "")
@@ -49,3 +55,7 @@ def ValidarCPF(cpf):
         return True #é válido
     else:
         return False #não é válido
+
+def ListarCliente (listadosnomes, listadoscpfs):
+    for indice in range(len(listadosnomes)):
+        print(f"Posição {indice} | Nome do cliente {listadosnomes[indice]} | CPF do cliente: {listadoscpfs[indice]}""")
