@@ -1,9 +1,22 @@
 from conta import *
 from cliente import *
+from cadastro import *
 
 #cliente 374.443.990-93
 #listas com os dados dos clientes
-nomes = []
+
+
+Cadastro()
+
+
+
+
+
+
+
+
+
+'''nomes = []
 cpfs = []
 
 nome, cpf = CadastroCliente()
@@ -21,6 +34,6 @@ if validacao and not existente:
 
 #Se existe, pula pro menu de opcoes
 elif validacao and existente:
-    MenuOpcoes(nome,cpf,lista_nomes,lista_saldos)
+    MenuOpcoes(nome,cpf,lista_nomes,lista_saldos)'''
         
 

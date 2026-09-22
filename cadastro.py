@@ -1,5 +1,6 @@
 from biblioteca import *
 
+def Cadastro():
     opcao = input('Entrar ou Cadastrar-se: ')
     if opcao == 'E':
         nome,cpf = CadastroCliente()
