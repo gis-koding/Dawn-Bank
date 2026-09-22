@@ -3,14 +3,13 @@ from cliente import *
 
 #cliente 374.443.990-93
 #listas com os dados dos clientes
-lista_nomes = []
-lista_cpfs = []
-lista_saldos = []
+nomes = []
+cpfs = []
 
 nome, cpf = CadastroCliente()
 validacao = ValidarCPF(cpf)
-AdicionaCliente(lista_nomes, lista_cpfs, nome, cpf) #cliente validado e adicionados nas listas
-existente = VerificarCliente(lista_nomes,nome) #verifica se cliente existe na base de dados
+AdicionaCliente(nomes, cpfs, nome, cpf) #cliente validado e adicionados nas listas
+existente = VerificarCliente(nomes,nome) #verifica se cliente existe na base de dados
 
 #Se não existe, adiciona os dados pela primeirs vez
 if validacao and not existente:

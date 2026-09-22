@@ -1,3 +1,18 @@
+from biblioteca import *
+
+#funcao adaptada para adicionar cliente
+def AdicionarCliente(nome,cpf,posicao):
+    clientes = acessar_lista("clientes")
+    cliente = (posicao,nome,cpf)
+    clientes.append(cliente)
+    salvar_json(clientes,"clientes")
+
+#funcao para pegar a posicao do novo cliente
+def NovoCliente():
+    clientes = acessar_lista("clientes")
+    posicao = len(clientes) + 1
+    return posicao
+
 def CadastroCliente(): #prestar atenção na ordem da chamada da função
     #o cliente 
     nome = input("Nome:")
