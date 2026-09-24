@@ -18,11 +18,11 @@ Serviços:
             print(menu)
             funcao = int(input('Digite o número do serviço: '))
         elif funcao == 2:
-            Depósito(saldo)
+            saldo = Depósito(saldo)
             print(menu)
             funcao = int(input('Digite o número do serviço: '))
         elif funcao == 3:
-            Saque(saldo)
+            saldo = Saque(saldo)
             print(menu)
             funcao = int(input('Digite o número do serviço: '))
     print('Sessão Finalizada.')

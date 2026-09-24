@@ -6,12 +6,13 @@ def Saldo(saldo):
 
 def Depósito(saldo):
      
-        valor = input('Digite o valor para depositar: ')
+        valor = int(input('Digite o valor para depositar: '))
         if float(valor) != None:
             saldo += valor
             print('Seu depósito foi concluído com sucesso! Saldo atual: R${saldo}')
         else:
             print('Depósito Cancelado.')
+        return saldo 
         
 def Saque(saldo):
     
