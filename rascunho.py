@@ -1,18 +1,20 @@
-'''import json 
+'''
+import json 
 from biblioteca import *
 
 clientes = ["kalil","andré"]
 
-salvar_json(clientes,"agencia01.json")
-clientes = carregar_json("agencia01.json")
+'''salvar_json(clientes,"agencia01.json")
+clientes = carregar_json("agencia01.json")'''
 
 clientes.append("giovanny")
 
 salvar_json(clientes,"agencia01.json")
 clientes = carregar_json("agencia01.json")
-print(clientes)'''
+print(clientes)
 
-'''l = ['1','2']
+l = ['1','2']
 
 for i in l:
-    print(int(i))'''
+    print(int(i))
+'''

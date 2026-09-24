@@ -24,10 +24,10 @@ def Saque(saldo):
             
 
 def AdicionarConta(cpf):
-    contas = acessar_lista("contas")
+    contas = acessar_lista("dados json/contas.json")
     conta = "001" + f"{cpf%1000}"
     contas.append(conta)
-    salvar_json(contas,"contas")
+    salvar_json(contas,"dados json/contas.json")
     print(conta)
         
 '''print('Conta Cadastrada com Sucesso!')

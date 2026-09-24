@@ -2,29 +2,21 @@ from biblioteca import *
 
 #funcao adaptada para adicionar cliente
 def AdicionarCliente(nome,cpf,posicao):
-    clientes = acessar_lista("clientes")
-    cliente = (posicao,nome,cpf)
+    clientes = acessar_lista("dados json/clientes.json")
+    cliente = (posicao,nome,cpf) #tupla !
     clientes.append(cliente)
-    salvar_json(clientes,"clientes")
-
-#funcao para pegar a posicao do novo cliente
-def NovoCliente():
-    clientes = acessar_lista("clientes")
-    posicao = len(clientes) + 1
-    return posicao
+    salvar_json(clientes,"dados json/clientes.json")
 
 def CadastroCliente(): #prestar atenção na ordem da chamada da função
     #o cliente 
     nome = input("Nome:")
     cpf = input("CPF: ")
+    cpf = cpf.replace(".","").replace("-","").replace(" ", "")
     #caso o cliente digite um cpf inválido:
     while not ValidarCPF(cpf): #not True: False; not False: True! 
         cpf = input ("CPF: ")
+        cpf = cpf.replace(".","").replace("-","").replace(" ", "") #deixa o cpf so digitos !
     return nome,cpf 
-
-def AdicionaCliente(listadosnomes, listadoscpfs, nome, cpf):
-    listadosnomes.append(nome) #adiciona o nome a lista de nomes
-    listadoscpfs.append(cpf) #adiciona o cpf a lista do cpf, na ordem.
 
 #função testada!
 def ValidarCPF(cpf):
@@ -71,6 +63,19 @@ def ValidarCPF(cpf):
     else:
         return False #não é válido
 
-def ListarCliente (listadosnomes, listadoscpfs):
-    for indice in range(len(listadosnomes)):
+def ListarCliente (): #dessa vez ele não recebe listas
+    clientes = acessar_lista("dados json/clientes.json")
+    if len(clientes) == 0:
+        print ("nenhum cliente cadastrado") #só para dizer 
+    else:
+        for indice in range(len(clientes)):
+            posicao = clientes[indice][0] 
+            nome = clientes[indice][1] 
+            cpf = clientes[indice][2]
+            print(f"Posição: {posicao}, Nome do cliente: {nome}, CPF: {cpf}")
+    
+
+    #tupla: posicao, nome cpf, 0 1 2
+    '''for indice in range(len(listadosnomes)):
         print(f"Posição {indice} | Nome do cliente {listadosnomes[indice]} | CPF do cliente: {listadoscpfs[indice]}""")
+        obs: quando a ideia era listas separadas'''
