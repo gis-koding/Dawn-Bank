@@ -13,10 +13,11 @@ def CadastroCliente(): #prestar atenção na ordem da chamada da função
     cpf = input("CPF: ")
     cpf = cpf.replace(".","").replace("-","").replace(" ", "")
     #caso o cliente digite um cpf inválido:
-    while not ValidarCPF(cpf): #not True: False; not False: True! 
+    while not ValidarCPF(cpf) and cpf != "SAIR": #pra parar
+    #not True: False; not False: True! 
         cpf = input ("CPF: ")
         cpf = cpf.replace(".","").replace("-","").replace(" ", "") #deixa o cpf so digitos !
-    return nome,cpf 
+    return nome,int(cpf) #para servir pra conta
 
 #função testada!
 def ValidarCPF(cpf):

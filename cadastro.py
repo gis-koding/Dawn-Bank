@@ -6,21 +6,37 @@ from menus import *
 def Cadastro():
     opcao = input('Entrar ou Cadastrar-se: ')
     saldos = acessar_lista("dados json/saldos.json")
+    contas = acessar_lista("dados json/contas.json")
     if opcao == 'E':
         nome,cpf = CadastroCliente()
         existente = VerificarCliente(cpf)
         if existente:
             posicao = ProcurarCpf(cpf)
             saldo = saldos[posicao]
-            saldo = MenuOpcoes(nome,conta,saldo)
-            SalvarSaldo(saldo)
+            conta = contas[posicao]
+            saldo = MenuCliente(nome,conta,saldo)
+            SalvarSaldo(saldo,posicao)
         else:
-            opcao == 'C'
+            print('Cliente Inexistente!')
+            
     elif opcao == 'C':
         nome,cpf = CadastroCliente()
         posicao = NovoCliente()
         AdicionarCliente(nome,cpf,posicao)
-        AdicionarConta(cpf)
+        conta = AdicionarConta(cpf)
+        saldo = PrimeiroAcesso()
+        SalvarSaldo(saldo,posicao)
+        while saldo < 50 and saldo > 0:
+            saldo += PrimeiroAcesso()
+            SalvarSaldo(saldo,posicao)
+        if saldo > 0:
+            saldo = MenuCliente(nome,conta,saldo)
+            SalvarSaldo(saldo,posicao)
+        else:
+            print('Saldo inválido! Tente Novamente!')
+        
+    elif opcao == 'A':
+        apagar_json()
     
     
 
