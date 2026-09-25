@@ -12,7 +12,16 @@ def acessar_lista(nome_arquivojson):
     #carregar json
     with open(nome_arquivojson, "r",encoding="utf-8") as arquivo: #ajuste aqui para acessar a pasta
         lista = json.load(arquivo) #load = le o arqv json
-    return lista
+
+    if nome_arquivojson == "dados json/contas.json" or nome_arquivojson == "dados json/saldos.json":
+        return lista
+    #transforma a matriz em tuplas
+    else:
+        for indice in range(len(lista)):
+            if len(lista[indice]) > 0:
+                lista[indice] = tuple(lista[indice])
+        
+        return lista
 
 def apagar_json():
     #apagar dados 
@@ -47,8 +56,12 @@ def VerificarCliente(cpf):
 
 def SalvarSaldo(saldo,posicao):
     saldos = acessar_lista("dados json/saldos.json")
-    saldos[posicao] = saldo
-    salvar_json(saldos,"dados json/saldos.json")
+    if len(saldos) > posicao:
+        saldos[posicao] = saldo
+        salvar_json(saldos,"dados json/saldos.json")
+    else:
+        saldos.append(saldo)
+        salvar_json(saldos,"dados json/saldos.json")
 
 def NovoCliente():
     clientes = acessar_lista("dados json/clientes.json")
@@ -56,15 +69,50 @@ def NovoCliente():
     #se é 0, a posicao é 0
     return posicao
 
-def SalvarAgencia():
-    contas = acessar_lista("dados json/contas.json")
-    agencia1 = acessar_lista("dados json/agencia1.json")
-    agencia2 = acessar_lista("dados json/agencia2.json")
 
-    for conta in contas:
-        if int(conta)%100 == 001:
-            agencia1.append(conta)
-        else:
-            agencia2.append(conta)
-    salvar_json(agencia1,"dados json/agencia1.json")
-    salvar_json(agencia2,"dados json/agencia2.json")
+def ListarAgencias():
+    clientes = acessar_lista("dados json/clientes.json")
+    contas = acessar_lista("dados json/contas.json")
+    saldos = acessar_lista("dados json/saldos.json")
+    
+    agencia = int(input('N° da agência: '))
+    if agencia == 1:
+        clientes1 = clientes[:3]
+        contas1 = contas[:3]
+        saldos1 = saldos[:3]
+        print('Agência 001')
+        for indice in range(len(clientes1)):
+            print(f'Cliente N° {indice} | Conta: {contas1[indice]} | Saldo: {saldos1[indice]}')
+        
+    elif agencia == 2:
+        clientes2 = clientes[3:]
+        contas2 = contas[3:]
+        saldos2 = saldos[3:]
+        print('Agência 002')
+        for indice in range(len(clientes2)):
+            print(f'Cliente N° {indice} | Conta: {contas2[indice]} | Saldo: {saldos2[indice]}')
+
+
+def Montante(tipo):
+    montante = 0
+    saldos = acessar_lista("dados json/saldos.json")
+    if tipo == "Agencia":
+        agencia = int(input('N° da agência: '))
+        if agencia == 1:
+            saldos1 = saldos[:3]
+            for saldo in saldos1:
+                montante += saldo
+            print(f'Montante da Agência 001 = R${montante}')
+        elif agencia == 2:
+            saldos2 = saldos[3:]
+            for saldo in saldos2:
+                montante += saldo
+            print(f'Montante da Agência 002 = R${montante}')
+
+            
+    elif tipo == "Banco":
+        montante = 0
+        for saldo in saldos:
+            montante += saldo
+        print(f'Montante do Banco = R${montante}')
+    

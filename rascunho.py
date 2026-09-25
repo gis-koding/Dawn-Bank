@@ -2,7 +2,6 @@
 import json 
 from biblioteca import *
 
-'''
 clientes = acessar_lista("dados json/clientes.json")
 for i in clientes:
     print(i)
@@ -14,7 +13,6 @@ for j in contas:
 saldos = acessar_lista("dados json/saldos.json")
 for k in saldos:
     print(k)
-'''
 
 '''Lógica Inicial:
 agencia 001 = 3 primeiros

@@ -64,7 +64,7 @@ def ValidarCPF(cpf):
     else:
         return False #não é válido
 
-def ListarCliente (): #dessa vez ele não recebe listas
+def ListarClientes(): #dessa vez ele não recebe listas
     clientes = acessar_lista("dados json/clientes.json")
     if len(clientes) == 0:
         print ("nenhum cliente cadastrado") #só para dizer 
@@ -73,7 +73,7 @@ def ListarCliente (): #dessa vez ele não recebe listas
             posicao = clientes[indice][0] 
             nome = clientes[indice][1] 
             cpf = clientes[indice][2]
-            print(f"Posição: {posicao}, Nome do cliente: {nome}, CPF: {cpf}")
+            print(f"Posição: {posicao} | Nome do cliente: {nome} | CPF: {cpf}")
     
 
     #tupla: posicao, nome cpf, 0 1 2

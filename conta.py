@@ -46,16 +46,18 @@ def PrimeiroAcesso():
     print('Conta Cadastrada com Sucesso!')
     #Primeiro Depósito
     valor = float(input('Digite o valor a ser depositado: '))
-    if valor >= 50.00:
-        saldo = valor
-        print('Depósito suficiente!')
-        return saldo
-    else:
-        saldo = valor
-        print(f'Saldo insuficiente. Conta não cadastrada.')
-        return saldo
+    print("Lembrete: Total mínimo de R$50.00")
+    while valor < 50:
+        print("Saldo insuficiente")
+        valor += float(input('Digite o valor a ser depositado: '))
+    return valor
 
 def AdicionarSaldo(saldo):
     saldos = acessar_lista("dados json/saldos.json")
     saldos.append(saldo)
     salvar_json(saldos,"dados json/saldos.json")
+
+def ListarContas():
+    contas = acessar_lista("dados json/contas.json")
+    for posicao in range(len(contas)):
+        print(f'Posição: {posicao} | Conta: {contas[posicao]}')

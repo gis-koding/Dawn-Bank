@@ -26,6 +26,7 @@ Serviços:
             funcao = int(input('Digite o número do serviço: '))
         else:
             print(menu)
+            funcao = int(input('Digite o número do serviço: '))
     print('Sessão Finalizada.')
     return saldo
 
@@ -43,14 +44,29 @@ Sair'''
     print(menug)
     opc = int(input('Digite uma opção: '))
     
-    while opc >= 0 and opc < 7:
+    while opc >= 0 and opc < 6:
     
         if opc == 1:
-            
+            ListarClientes()
             opc = int(input('Digite uma opção: '))
             
         elif opc == 2:
-            return ListarClientes(lista_nomes,lista_cpfs)
+            ListarAgencias()
+            opc = int(input('Digite uma opção: '))
+
+        elif opc == 3:
+            ListarContas()
+            opc = int(input('Digite uma opção: '))
+        elif opc == 4:
+            Montante("Agencia")
+            opc = int(input('Digite uma opção: '))
+            
+        elif opc == 5:
+            Montante("Banco")
+            opc = int(input('Digite uma opção: '))
+
+        else:
             print(menug)
             opc = int(input('Digite uma opção: '))
+            
     print('Sessão Finalizada.')

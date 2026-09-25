@@ -26,17 +26,13 @@ def Cadastro():
         conta = AdicionarConta(cpf)
         saldo = PrimeiroAcesso()
         SalvarSaldo(saldo,posicao)
-        while saldo < 50 and saldo > 0:
-            saldo += PrimeiroAcesso()
-            SalvarSaldo(saldo,posicao)
         if saldo > 0:
             saldo = MenuCliente(nome,conta,saldo)
             SalvarSaldo(saldo,posicao)
-        else:
-            print('Saldo inválido! Tente Novamente!')
         
-    elif opcao == 'A':
-        apagar_json()
+    elif opcao == 'G':
+        MenuGerente()
+        
     
     
 
