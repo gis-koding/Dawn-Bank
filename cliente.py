@@ -17,7 +17,7 @@ def CadastroCliente(): #prestar atenção na ordem da chamada da função
     #not True: False; not False: True! 
         cpf = input ("CPF: ")
         cpf = cpf.replace(".","").replace("-","").replace(" ", "") #deixa o cpf so digitos !
-    return nome,int(cpf) #para servir pra conta
+    return nome,int(cpf) #para servir pra criar a conta - f: AdicionarConta()
 
 #função testada!
 def ValidarCPF(cpf):

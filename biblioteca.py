@@ -15,7 +15,9 @@ def acessar_lista(nome_arquivojson):
 
     if nome_arquivojson == "dados json/contas.json" or nome_arquivojson == "dados json/saldos.json":
         return lista
+        
     #transforma a matriz em tuplas
+    #Lembrar: apaga.
     else:
         for indice in range(len(lista)):
             if len(lista[indice]) > 0:
@@ -25,11 +27,13 @@ def acessar_lista(nome_arquivojson):
 
 def apagar_json():
     #apagar dados 
-    salvar_json([],"dados json/clientes.json")
+    #botao de autodestruicao do banco de dados inteiro :D
+    salvar_json([],"dados json/clientes.json") #deixa lista vazia pra nao dar erro na hora da listagem
     salvar_json([],"dados json/contas.json")
     salvar_json([],"dados json/saldos.json")
     print("Todos os dados excluídos com sucesso!")
 
+#funcao a ser trabalhada ainda
 def ApagarConta(posicao):
     contas = acessar_lista("dados json/contas.json")
     contas.delete(posicao)
@@ -52,8 +56,9 @@ def VerificarCliente(cpf):
             return True
     return False #não existe
     
-    #porque o loop sendo que só o 'in' resolve?
 
+
+#salva o saldo no json//possivelmente tambem adiciona
 def SalvarSaldo(saldo,posicao):
     saldos = acessar_lista("dados json/saldos.json")
     if len(saldos) > posicao:
@@ -63,6 +68,7 @@ def SalvarSaldo(saldo,posicao):
         saldos.append(saldo)
         salvar_json(saldos,"dados json/saldos.json")
 
+#pega a posicao do novo cliente
 def NovoCliente():
     clientes = acessar_lista("dados json/clientes.json")
     posicao = len(clientes)
@@ -76,8 +82,9 @@ def ListarAgencias():
     saldos = acessar_lista("dados json/saldos.json")
     
     agencia = int(input('N° da agência: '))
+    
     if agencia == 1:
-        clientes1 = clientes[:3]
+        clientes1 = clientes[:3] 
         contas1 = contas[:3]
         saldos1 = saldos[:3]
         print('Agência 001')
@@ -96,20 +103,24 @@ def ListarAgencias():
 def Montante(tipo):
     montante = 0
     saldos = acessar_lista("dados json/saldos.json")
+
+    #montante da agencia
     if tipo == "Agencia":
         agencia = int(input('N° da agência: '))
+        
         if agencia == 1:
             saldos1 = saldos[:3]
             for saldo in saldos1:
                 montante += saldo
             print(f'Montante da Agência 001 = R${montante}')
+            
         elif agencia == 2:
             saldos2 = saldos[3:]
             for saldo in saldos2:
                 montante += saldo
             print(f'Montante da Agência 002 = R${montante}')
-
             
+    #montante geral
     elif tipo == "Banco":
         montante = 0
         for saldo in saldos:

@@ -11,12 +11,13 @@ N° da Conta: {conta}
 Serviços:
 1- Saldo
 2- Depósito
-3- Saque''')
+3- Saque
+4- Transferência''')
     print(menu)
     funcao = int(input('Digite o número do serviço: '))
-    while funcao < 4 and funcao >= 0:
+    while funcao < 5 and funcao >= 0:
         if funcao == 1:
-            Saldo(saldo)
+            Saldo(saldo) #so pra mostrar, nao precisa salvar
             funcao = int(input('Digite o número do serviço: '))
         elif funcao == 2:
             saldo = Depósito(saldo)
@@ -24,11 +25,14 @@ Serviços:
         elif funcao == 3:
             saldo = Saque(saldo)
             funcao = int(input('Digite o número do serviço: '))
+        elif funcao == 4:
+            saldo = Transferencia(saldo)
+            funcao = int(input('Digite o número do serviço: '))
         else:
             print(menu)
             funcao = int(input('Digite o número do serviço: '))
     print('Sessão Finalizada.')
-    return saldo
+    return saldo #para salvamento no json
 
 
 def MenuGerente():
@@ -47,26 +51,26 @@ Sair'''
     while opc >= 0 and opc < 6:
     
         if opc == 1:
-            ListarClientes()
+            ListarClientes() #em clientes.py
             opc = int(input('Digite uma opção: '))
             
         elif opc == 2:
-            ListarAgencias()
+            ListarAgencias() #em biblioteca
             opc = int(input('Digite uma opção: '))
 
         elif opc == 3:
-            ListarContas()
+            ListarContas() #em conta.py
             opc = int(input('Digite uma opção: '))
         elif opc == 4:
-            Montante("Agencia")
+            Montante("Agencia") #em biblioteca
             opc = int(input('Digite uma opção: '))
             
         elif opc == 5:
-            Montante("Banco")
+            Montante("Banco") #em biblioteca
             opc = int(input('Digite uma opção: '))
 
         else:
             print(menug)
             opc = int(input('Digite uma opção: '))
             
-    print('Sessão Finalizada.')
+    print('Sessão Finalizada.') #nao precisa de salvamento
