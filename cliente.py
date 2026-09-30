@@ -1,11 +1,10 @@
 from biblioteca import *
 
-#funcao adaptada para adicionar cliente
-def AdicionarCliente(nome,cpf,posicao):
-    clientes = acessar_lista("dados json/clientes.json")
-    cliente = (posicao,nome,cpf) #tupla !
-    clientes.append(cliente)
-    salvar_json(clientes,"dados json/clientes.json")
+#ADAPTAÇÃO: dicionário
+def AdicionarCliente(nome,cpf):
+    clientes = acessar_dados("clientes")
+    clientes[cpf] = [nome]
+    salvar_dados(clientes,"clientes")
 
 def CadastroCliente(): #prestar atenção na ordem da chamada da função
     #o cliente 
@@ -17,7 +16,7 @@ def CadastroCliente(): #prestar atenção na ordem da chamada da função
     #not True: False; not False: True! 
         cpf = input ("CPF: ")
         cpf = cpf.replace(".","").replace("-","").replace(" ", "") #deixa o cpf so digitos !
-    return nome,int(cpf) #para servir pra criar a conta - f: AdicionarConta()
+    return nome,cpf #para servir pra criar a conta - f: AdicionarConta()
 
 #função testada!
 def ValidarCPF(cpf):
@@ -64,7 +63,7 @@ def ValidarCPF(cpf):
     else:
         return False #não é válido
 
-def ListarClientes(): #dessa vez ele não recebe listas
+'''def ListarClientes(): #dessa vez ele não recebe listas
     clientes = acessar_lista("dados json/clientes.json")
     if len(clientes) == 0:
         print ("nenhum cliente cadastrado") #só para dizer 
@@ -73,7 +72,7 @@ def ListarClientes(): #dessa vez ele não recebe listas
             posicao = clientes[indice][0] 
             nome = clientes[indice][1] 
             cpf = clientes[indice][2]
-            print(f"Posição: {posicao} | Nome do cliente: {nome} | CPF: {cpf}")
+            print(f"Posição: {posicao} | Nome do cliente: {nome} | CPF: {cpf}")'''
     
 
     #tupla: posicao, nome cpf, 0 1 2

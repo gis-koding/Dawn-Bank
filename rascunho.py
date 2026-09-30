@@ -1,7 +1,6 @@
-'''Lógica Inicial:
-agencia 001 = 3 primeiros
-agencia 002 = restante
+'''agencia 01 = tipo(conta) salario
+agencia 02 = tipo(conta) corrente
+agencia 03 = tipo(conta) poupanca'''
 
-ou:
-agencia 001 = tipo(conta) corrente
-agencia 002 = tipo(conta) poupança'''
+'''cpf = 17042624025
+print(cpf//100000)'''
