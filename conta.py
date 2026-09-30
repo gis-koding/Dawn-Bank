@@ -1,11 +1,14 @@
 from biblioteca import *
 
+def decimal_ao_jeito_brasileiro(numero): #zero criatividade para criar essa func
+    return float(numero.replace(",",".")) #decimal com virgula -> decimal com ponto
+
 #Consultar Saldo
 def Saldo(saldo):
     print(f'Saldo = R${saldo:.2f}.')
     
 def Depósito(saldo):
-        valor = float(input('Digite o valor para depositar: '))
+        valor = decimal_ao_jeito_brasileiro(input('Digite o valor para depositar: '))
         if valor > 0:
             saldo += valor
             print(f'Depósito concluído! Saldo atual: R${saldo:.2f}')
@@ -15,7 +18,7 @@ def Depósito(saldo):
         return saldo
 
 def Saque(saldo):
-        valor = float(input('Digite o valor para sacar: '))
+        valor = decimal_ao_jeito_brasileiro(input('Digite o valor para sacar: '))
         if valor < saldo:
            saldo = saldo - valor
            print(f'Saque concluído! Saldo atual: R${saldo:.2f}')       

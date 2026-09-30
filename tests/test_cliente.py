@@ -1,8 +1,6 @@
 import pytest
 from cliente import ValidarCPF
-from biblioteca import * 
-from conta import PrimeiroAcesso
-#importando as funções json 
+ 
 #obs importante: os testes falham quando a função tem input ! o ideal é testar nas funções sem input
      
 '''o teste 1 será feito nos casos: numeros repetidos, 

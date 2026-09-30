@@ -73,9 +73,3 @@ def ValidarCPF(cpf):
             nome = clientes[indice][1] 
             cpf = clientes[indice][2]
             print(f"Posição: {posicao} | Nome do cliente: {nome} | CPF: {cpf}")'''
-    
-
-    #tupla: posicao, nome cpf, 0 1 2
-    '''for indice in range(len(listadosnomes)):
-        print(f"Posição {indice} | Nome do cliente {listadosnomes[indice]} | CPF do cliente: {listadoscpfs[indice]}""")
-        obs: quando a ideia era listas separadas'''
