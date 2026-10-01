@@ -1,12 +1,15 @@
 from biblioteca import *
 
+def decimal_ao_jeito_brasileiro(numero): #zero criatividade para criar essa func
+    return float(numero.replace(",",".")) #decimal com virgula -> decimal com ponto
+
 #Consultar Saldo
 def Saldo(saldo):
     print(f'Saldo = R${saldo:.2f}.')
 
 
 def Depósito(saldo):
-        valor = float(input('Digite o valor para depositar: '))
+        valor = decimal_ao_jeito_brasileiro(input('Digite o valor para depositar: '))
         if valor > 0:
             saldo += valor
             print(f'Depósito concluído! Saldo atual: R${saldo:.2f}')
@@ -17,7 +20,7 @@ def Depósito(saldo):
 
 
 def Saque(saldo):
-        valor = float(input('Digite o valor para sacar: '))
+        valor = decimal_ao_jeito_brasileiro(input('Digite o valor para sacar: '))
         if valor < saldo:
            saldo = saldo - valor
            print(f'Saque concluído! Saldo atual: R${saldo:.2f}')       
@@ -76,7 +79,7 @@ def AdicionarConta(nome,cpf,conta,tipo):
 def PrimeiroAcesso():
     print('Conta Cadastrada com Sucesso!')
     #Primeiro Depósito
-    saldo = float(input('Digite o valor a ser depositado: '))
+    saldo = decimal_ao_jeito_brasileiro(input('Digite o valor a ser depositado: '))
     print("Lembrete: Total mínimo de R$50.00")
     
     while saldo < 50:
@@ -133,7 +136,7 @@ def PIXeTED(saldo):
 
         print(f'Transferindo para {nomedestino}')
         #transferencia
-        valordestino = float(input('Digite o valor a transferir: '))
+        valordestino = decimal_ao_jeito_brasileiro(input('Digite o valor a transferir: '))
         if saldo >= valordestino:
             saldodestino += valordestino
             saldo -= valordestino
@@ -159,7 +162,7 @@ def PIXeTED(saldo):
         
         #transferencia
         print(f'Transferindo para {nomedestino}')
-        valordestino = float(input('Digite o valor a transferir: '))
+        valordestino = decimal_ao_jeito_brasileiro(input('Digite o valor a transferir: '))
         if saldo >= valordestino:
             saldodestino += valordestino
             saldo -= valordestino

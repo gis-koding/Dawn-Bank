@@ -78,8 +78,9 @@ def ListarClientes():
             nome = dados[0]
             conta = dados[1]
             
-            print(f"Cliente N°: {contador} | Nome do cliente: {nome} | CPF: {cpf} | N° da Conta: {conta}")
-    
+            print(f'''Cliente N°: {contador} 
+Nome do cliente: {nome} | CPF: {cpf} | N° da Conta: {conta}
+''')
 
 
 #tupla: posicao, nome cpf, 0 1 2
