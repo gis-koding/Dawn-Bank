@@ -3,7 +3,8 @@ from biblioteca import *
 #Consultar Saldo
 def Saldo(saldo):
     print(f'Saldo = R${saldo:.2f}.')
-    
+
+
 def Depósito(saldo):
         valor = float(input('Digite o valor para depositar: '))
         if valor > 0:
@@ -14,6 +15,7 @@ def Depósito(saldo):
 
         return saldo
 
+
 def Saque(saldo):
         valor = float(input('Digite o valor para sacar: '))
         if valor < saldo:
@@ -23,6 +25,7 @@ def Saque(saldo):
            print('Saque cancelado.')        
 
         return saldo
+
 
 def CriarConta(nome,cpf):
     tipo = input('Escolha o tipo da conta: ')
@@ -42,8 +45,11 @@ def CriarConta(nome,cpf):
     else:
         conta = "03" + f'{numconta}'
         tipo = "poupança"
-
-    print(tipo,conta)
+        
+    while len(conta) < 8:
+        conta = conta + "5"
+        print(tipo,conta)
+        
     #N° da conta = agencia/tipo da conta + 6 dig do cpf
 
     #adicionando os dados necessarios no json
@@ -51,6 +57,7 @@ def CriarConta(nome,cpf):
     
     #cliente[cpf] = "cpf": [nome,conta]
     #contas[conta] = "conta": [nome ou (nome1,nome2),str(cpf),saldo,int(conta)]
+
 
 def AdicionarConta(nome,cpf,conta,tipo):
     clientes = acessar_dados("clientes")
@@ -81,37 +88,97 @@ def PrimeiroAcesso():
     return saldo
 
 
+#atualizado!
 
+def ListarContas():
+    contas = acessar_dados("contas")
+    chaves = contas.keys()
+    contador = 0
+    #"conta": [nome,cpf,tipo,saldo]
+    for conta in chaves:
+        contador += 1
+        dados = contas.get(conta)
+        
+        nome = dados[0]
+        cpf = dados[1]
+        tipo = dados[2]
+        saldo = dados[3]
+        
+        print(f'''Cliente N°: {contador} | Nome: {nome} | CPF: {cpf}
+Conta: {conta} | Tipo de Conta: {tipo} | Saldo: R${saldo:.2f}
+''')
 
-
-
-#ATUALIZAR:
-
-'''def ListarContas():
-    contas = acessar_lista("dados json/contas.json")
-    for posicao in range(len(contas)):
-        print(f'Posição: {posicao} | Conta: {contas[posicao]}')
 
 # transferencia por meio do n° da conta
-def PIXeTED(conta,saldo):
-    contas = acessar_dados("dados json/contas.json")
-    dados_conta = contas.get(conta)
-    saldo = dados_conta[3]
-    
-    destino = int(input('Digite o N° da conta: '))
-    valordestino = float(input('Valor: '))
-    
-    dados_contadestino = contas.get(conta,0)
-    if dados_contadestino == 0:
-        print("Conta não encontrada")
-    else:
-        saldodestino = dados_contadestino[3]
-        saldodestino += valordestino
-        saldo -= valordestino
-        
-        Salvar(saldodestino)
-        print(f'Transferência bem sucedida!Saldo: R${saldo}')
+# e cpf
+def PIXeTED(saldo):
+#LEMBRAR: fazer funcao para os blocos de busca e transferencia
+# loop e validacao de conta, cpf
 
-    return saldo'''
-            
+    # "cpf": [nome,conta]
+    def porCPF(saldo):
+        cpfdestino = input('Digite um cpf: ')
+        #validacao de cpf aqui
+
+        #pegar o nunero da conta destino
+        clientes = acessar_dados("clientes")
+        dados_destino = clientes.get(cpfdestino)
+        contadestino = dados_destino[1]
+        nomedestino = dados_destino[0]
+
+        #pegar o saldo destino a partir da conta
+        contas = acessar_dados("contas")
+        dados_conta = contas.get(contadestino)
+        saldodestino = dados_conta[3]
+
+        print(f'Transferindo para {nomedestino}')
+        #transferencia
+        valordestino = float(input('Digite o valor a transferir: '))
+        if saldo >= valordestino:
+            saldodestino += valordestino
+            saldo -= valordestino
+            print(f'Transferência concluída! Saldo atual: R${saldo:.2f}')
+
+            #salvarsaldo do destino
+            salvar_saldo(contadestino,saldodestino)
+        else:
+            print('Saldo insuficiente.')
+        
+        return saldo   
+
+    #'conta': [nome,cpf,tipo,saldo]
+    def porConta(saldo):
+        contadestino = input('Digite N° da conta: ')
+        #validacao de conta aqui
+
+        #pegando o saldo destino apartir da conta
+        contas = acessar_dados("contas")
+        dados_conta = contas.get(contadestino)
+        saldodestino = dados_conta[3]
+        nomedestino = dados_conta[0]
+        
+        #transferencia
+        print(f'Transferindo para {nomedestino}')
+        valordestino = float(input('Digite o valor a transferir: '))
+        if saldo >= valordestino:
+            saldodestino += valordestino
+            saldo -= valordestino
+            print(f'Transferência concluída! Saldo atual: R${saldo:.2f}')
+            salvar_saldo(contadestino,saldodestino)
+        else:
+            print('Saldo insuficiente.')
+
+        
+        return saldo
+        
+
+    print(f'''Como deseja transferir? 
+[1]CPF [2]N° da Conta''')
+
+    escolha = int(input())
+    if escolha == 1:
+        saldo = porCPF(saldo)
+    elif escolha == 2:
+        saldo = porConta(saldo)
+    return saldo    
     

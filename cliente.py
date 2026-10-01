@@ -63,19 +63,26 @@ def ValidarCPF(cpf):
     else:
         return False #não é válido
 
-'''def ListarClientes(): #dessa vez ele não recebe listas
-    clientes = acessar_lista("dados json/clientes.json")
-    if len(clientes) == 0:
+#ATUALIZAÇÃO: dicionario
+def ListarClientes():
+    clientes = acessar_dados("clientes")
+    if clientes == {}:
         print ("nenhum cliente cadastrado") #só para dizer 
     else:
-        for indice in range(len(clientes)):
-            posicao = clientes[indice][0] 
-            nome = clientes[indice][1] 
-            cpf = clientes[indice][2]
-            print(f"Posição: {posicao} | Nome do cliente: {nome} | CPF: {cpf}")'''
+        #"cpf": [nome,conta]
+        cpfs = clientes.keys()
+        contador = 0
+        for cpf in cpfs:
+            contador += 1
+            dados = clientes.get(cpf)
+            nome = dados[0]
+            conta = dados[1]
+            
+            print(f"Cliente N°: {contador} | Nome do cliente: {nome} | CPF: {cpf} | N° da Conta: {conta}")
     
 
-    #tupla: posicao, nome cpf, 0 1 2
-    '''for indice in range(len(listadosnomes)):
+
+#tupla: posicao, nome cpf, 0 1 2
+'''for indice in range(len(listadosnomes)):
         print(f"Posição {indice} | Nome do cliente {listadosnomes[indice]} | CPF do cliente: {listadoscpfs[indice]}""")
         obs: quando a ideia era listas separadas'''

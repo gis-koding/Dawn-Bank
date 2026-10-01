@@ -75,30 +75,6 @@ def salvar_saldo(conta,saldo):
     salvar_dados(contas,"contas")
     
 
-'''def ListarAgencias():
-    clientes = acessar_lista("dados json/clientes.json")
-    contas = acessar_lista("dados json/contas.json")
-    saldos = acessar_lista("dados json/saldos.json")
-    
-    agencia = int(input('N° da agência: '))
-    
-    if agencia == 1:
-        clientes1 = clientes[:3] 
-        contas1 = contas[:3]
-        saldos1 = saldos[:3]
-        print('Agência 001')
-        for indice in range(len(clientes1)):
-            print(f'Cliente N° {indice} | Conta: {contas1[indice]} | Saldo: {saldos1[indice]}')
-        
-    elif agencia == 2:
-        clientes2 = clientes[3:]
-        contas2 = contas[3:]
-        saldos2 = saldos[3:]
-        print('Agência 002')
-        for indice in range(len(clientes2)):
-            print(f'Cliente N° {indice} | Conta: {contas2[indice]} | Saldo: {saldos2[indice]}')'''
-
-
 '''def Montante(tipo):
     montante = 0
     saldos = acessar_lista("dados json/saldos.json")

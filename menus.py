@@ -1,11 +1,14 @@
 from biblioteca import *
 from conta import *
 from cliente import *
+from agencia import *
 
 def MenuCliente(conta,dadosconta):
 
-    nome = dadosconta[0]
-    saldo = dadosconta[3]
+    #"conta" = [nome,cpf,tipo,saldo]
+    nome = dadosconta[0] #print
+    cpf = dadosconta[1] #para fazer pix
+    saldo = dadosconta[3] #para fazer as operacoes
 
     menu = (f'''Olá, {nome}! | {conta}
 Serviços:
@@ -13,7 +16,8 @@ Serviços:
 
     print(menu)
     opcao = int(input('Digite um serviço: '))
-    
+
+    #finaliza digitando negativo ou de 5 em diante
     while opcao >=  0 and opcao < 5:
     
         if opcao == 0:
@@ -25,7 +29,7 @@ Serviços:
         elif opcao == 3:
             saldo = Saque(saldo)
         elif opcao == 4:
-            saldo = PixeTED(saldo)
+            saldo = PIXeTED(saldo)
 
         opcao = int(input('Digite um serviço: '))
         
@@ -41,23 +45,24 @@ def MenuGerente():
 
     print(menug)
     opcao = int(input('Digite um serviço: '))
-    
+
+    #se digitar de 6 pra cima ou negativo finaliza a sessao
     while opcao >= 0 and opcao < 6:
     
         if opcao == 0:
             print(menug)
-        elif funcao == 1:
+        elif opcao == 1:
             ListarClientes()
-        elif funcao == 2:
+        elif opcao == 2:
             ListarAgencias()
-        elif funcao == 3:
+        elif opcao == 3:
             ListarContas()
-        elif funcao == 4:
+        elif opcao == 4:
             Montante("Agencia")
-        elif funcao == 5:
+        elif opcao == 5:
             Montante("Banco")
             
-        opcao = input('Digite um serviço: ') 
+        opcao = int(input('Digite um serviço: '))
             
     print('Sessão Finalizada.') 
     #nao precisa de salvamento
