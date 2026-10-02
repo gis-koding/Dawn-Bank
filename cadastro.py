@@ -12,9 +12,12 @@ def Entrar():
 
     #adicionar verificacao
     dados_cliente = clientes.get(cpf)
-    conta = dados_cliente[1]
-    dados_conta = contas.get(conta)
-    MenuCliente(conta,dados_conta)
+    if dados_cliente == None: #aqui evita que não tenha cpf cadastrado
+        print("Cliente não encontrado! É preciso efetuar cadastro.")
+    else:
+        conta = dados_cliente[1]
+        dados_conta = contas.get(conta)
+        MenuCliente(conta,dados_conta)
 
 #funcionando!
 def Registrar():
@@ -35,5 +38,7 @@ def Login():
         MenuGerente()
     elif opcao == 'A':
         apagar_dados()
+    elif opcao == 'B': #o usuário busca seu próprio cpf, como consulta
+        BuscarPorCpf()
     else:
         print('Inválido.')

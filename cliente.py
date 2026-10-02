@@ -3,8 +3,11 @@ from biblioteca import *
 #ADAPTAÇÃO: dicionário
 def AdicionarCliente(nome,cpf):
     clientes = acessar_dados("clientes")
-    clientes[cpf] = [nome]
-    salvar_dados(clientes,"clientes")
+    if cpf in clientes:
+        print("Cliente já cadastrado") #evita sobrescrever dados no dicionário
+    else:
+        clientes[cpf] = [nome]
+        salvar_dados(clientes,"clientes")
 
 def CadastroCliente(): #prestar atenção na ordem da chamada da função
     #o cliente 
@@ -12,7 +15,7 @@ def CadastroCliente(): #prestar atenção na ordem da chamada da função
     cpf = input("CPF: ")
     cpf = cpf.replace(".","").replace("-","").replace(" ", "")
     #caso o cliente digite um cpf inválido:
-    while not ValidarCPF(cpf) and cpf != "SAIR": #pra parar
+    while not ValidarCPF(cpf): #pra parar, tirei o SAIR
     #not True: False; not False: True! 
         cpf = input ("CPF: ")
         cpf = cpf.replace(".","").replace("-","").replace(" ", "") #deixa o cpf so digitos !
@@ -83,7 +86,16 @@ Nome do cliente: {nome} | CPF: {cpf} | N° da Conta: {conta}
 ''')
 
 
-#tupla: posicao, nome cpf, 0 1 2
-'''for indice in range(len(listadosnomes)):
-        print(f"Posição {indice} | Nome do cliente {listadosnomes[indice]} | CPF do cliente: {listadoscpfs[indice]}""")
-        obs: quando a ideia era listas separadas'''
+#Busca por CPF , etapa 3 !
+def BuscarPorCpf():
+    dict_clientes = acessar_dados("clientes")
+    consultar_cpf = input("Qual CPF deseja consultar? ")
+    if consultar_cpf in dict_clientes:
+        print("CPF encontrado!")
+        print(dict_clientes[consultar_cpf])
+    else:
+        print("CPF não encontrado na lista de clientes!")
+
+def BuscarCliente(cpf):
+    clientes = acessar_dados("clientes")
+    return clientes.get(cpf) #devolve o valor dessa chave

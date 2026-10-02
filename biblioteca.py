@@ -1,35 +1,34 @@
 import json
 
 #Lembrete: Alterar todo acessar_lista por acessar_dados
+#Já que agora podemos usar dicionário e digitar "clientes" ou cliente estava causando problema:
+
+caminhos = {
+    "clientes": "dados json/clientes.json",
+    "contas": "dados json/contas.json"
+}
 
 def salvar_dados(dicti,nome_arquivo):
-
-    #sao dois arquivos, logo, se nao for um é outro
-    if nome_arquivo == "clientes":
-        arquivo_json = "dados json/clientes.json"
-    else:
-        arquivo_json = "dados json/contas.json"
+    if nome_arquivo not in caminhos:
+        print(f"Erro: '{nome_arquivo} não é um arquivo reconhecido")
+        return 
+    #sao dois arquivos, verifico no dicionário
         
-    with open(arquivo_json, "w", encoding="utf-8") as arquivo: 
+    with open(caminhos[nome_arquivo], "w", encoding="utf-8") as arquivo: 
         #o w é write: escrever e o utf mantem a formatação
         json.dump(dicti, arquivo, ensure_ascii=False)
         #o dump escreve
         #o ensure ascii mantém acentos e formatação no arq json q será criado
-
+        #a lógica usada: para evitar erros, coloco o caminho no dicionário e pegamos o valor dessa chave em específico
 
 
 def acessar_dados(nome_arquivo): #antigo acessar_lista, p/ carregar json
-
-    #para nao escrever o caminho toda hora
-    if nome_arquivo == "clientes":
-        arquivo_json = "dados json/clientes.json"
-    else:
-        arquivo_json = "dados json/contas.json"
-
-    #carregar dicionario
-    with open(arquivo_json, "r",encoding="utf-8") as arquivo: #ajuste aqui para acessar a pasta
-        dicti = json.load(arquivo) #load = le o arqv json
-    return dicti
+    if nome_arquivo not in caminhos:
+        print(f"Erro: '{nome_arquivo}' não é um arquivo reconhecido")
+        return {}
+    #carregar dicionario 
+    with open(caminhos[nome_arquivo], "r",encoding="utf-8") as arquivo:
+        return json.load(arquivo) #load = le o arqv json
 
 
 

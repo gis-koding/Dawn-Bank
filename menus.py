@@ -41,13 +41,14 @@ def MenuGerente():
 
     menug = (f'''Serviços: 
 [1]Listar Clientes [2]Listar Agências [3]Listar Contas
-[4]Montante Agência [5]Montante Banco''')
+[4]Montante Agência [5]Montante Banco [6]Busca por Conta
+[7]Busca por CPF/Cliente''')
 
     print(menug)
     opcao = int(input('Digite um serviço: '))
 
     #se digitar de 6 pra cima ou negativo finaliza a sessao
-    while opcao >= 0 and opcao < 6:
+    while opcao >= 0 and opcao < 8:
     
         if opcao == 0:
             print(menug)
@@ -61,8 +62,14 @@ def MenuGerente():
             Montante("Agencia")
         elif opcao == 5:
             Montante("Banco")
+        elif opcao == 6:
+            BuscarPorConta()
+        elif opcao == 7:
+            BuscarPorCpf()
             
         opcao = int(input('Digite um serviço: '))
             
     print('Sessão Finalizada.') 
     #nao precisa de salvamento
+    #gerente consulta a situação das contas por BuscaporConta
+    #ou o gerente consulta a situação do cliente por BuscaCpf! 

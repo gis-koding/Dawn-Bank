@@ -120,7 +120,7 @@ def PIXeTED(saldo):
 
     # "cpf": [nome,conta]
     def porCPF(saldo):
-        cpfdestino = input('Digite um cpf: ')
+        cpfdestino = input('Digite um cpf: ').replace(".","").replace("-","").replace(" ", "")
         #validacao de cpf aqui
 
         #pegar o nunero da conta destino
@@ -185,3 +185,11 @@ def PIXeTED(saldo):
         saldo = porConta(saldo)
     return saldo    
     
+def BuscarPorConta():
+    dict_contas = acessar_dados("contas")
+    consultar_conta = input("Qual conta deseja consultar? ")
+    if consultar_conta in dict_contas:
+        print("Conta encontrada!")
+        print(dict_contas[consultar_conta])
+    else:
+        print("Conta não encontrada na lista de contas!")
