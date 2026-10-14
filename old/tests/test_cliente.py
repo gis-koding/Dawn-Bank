@@ -1,5 +1,5 @@
 import pytest
-from a_ser_testado import ValidarCPF
+from old.tests.a_ser_testado import ValidarCPF
 
  
 #obs importante: os testes falham quando a função tem input ! o ideal é testar nas funções sem input

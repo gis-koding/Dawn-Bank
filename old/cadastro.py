@@ -1,7 +1,7 @@
-from biblioteca import *
-from cliente import *
-from conta import *
-from menus import *
+from old.biblioteca import *
+from old.cliente import *
+from old.conta import *
+from old.menus import *
 
 #funcionando!
 def Entrar():

@@ -1,4 +1,4 @@
-from biblioteca import *
+from old.biblioteca import *
 
 def decimal_ao_jeito_brasileiro(numero): #zero criatividade para criar essa func
     return float(numero.replace(",",".")) #decimal com virgula -> decimal com ponto

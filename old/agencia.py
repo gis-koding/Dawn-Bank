@@ -1,4 +1,4 @@
-from biblioteca import *
+from old.biblioteca import *
 
 def separar():
     #inicializando os dicts

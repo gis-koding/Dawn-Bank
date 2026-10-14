@@ -1,4 +1,4 @@
-from biblioteca import *
+from old.biblioteca import *
 
 #ADAPTAÇÃO: dicionário
 def AdicionarCliente(nome,cpf):
