@@ -1,6 +1,8 @@
 import json
 
-DADOS = 'clients.json'
+DADOS = 'clientes.json'
+
+# funcoes que são usadas no html
 
 def salvar_dados(clientes):
     with open(DADOS, "w", encoding="utf-8") as arquivo: 
@@ -18,4 +20,6 @@ def acessar_dados(): #antigo acessar_lista, p/ carregar json
     with open(DADOS, "r",encoding="utf-8") as arquivo:
         return json.load(arquivo) #load = le o arqv json
 
+def decimal_ao_jeito_brasileiro(numero): #zero criatividade para criar essa func
+    return float(numero.replace(",",".")) #decimal com virgula -> decimal com ponto
 
