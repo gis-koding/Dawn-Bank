@@ -193,3 +193,55 @@ def BuscarPorConta():
         print(dict_contas[consultar_conta])
     else:
         print("Conta não encontrada na lista de contas!")
+
+#etapa 4
+def numero_de_contas():
+    contas = acessar_dados("contas")
+    return len(contas)
+
+def contas_saldo_positivo():
+    contas = acessar_dados("contas")
+    return [(conta, dados_da_conta) for conta, dados_da_conta in contas.items() if dados_da_conta[3] > 0]
+#{numconta: [0nome, 1cpf, 2tipo, 3saldo]} o "items" devolve (chave, valor)
+
+def maior_menor_saldo():
+    contas = acessar_dados("contas")
+
+    if not contas:  # se o dict estiver vazio
+        print("Nenhuma conta cadastrada!")
+        return None
+
+    saldos = [dados[3] for dados in contas.values()] #extraio os saldos
+
+    maior_saldo = max(saldos)
+    menor_saldo = min(saldos)
+
+    for conta, dados in contas.items(): 
+        if dados[3] == maior_saldo:
+            maior = (conta, dados)
+        if dados[3] == menor_saldo:
+            menor = (conta, dados)
+
+    return maior, menor
+
+def saldo_total():
+    contas = acessar_dados("contas")
+
+    if not contas:
+        print("Nenhuma conta cadastrada!")
+        return None
+    
+    saldos = [dados[3] for dados in contas.values()]
+    return sum(saldos)                       #evitei usar recursão para caso de teste com muitos dados rs
+
+def saldo_medio():
+    contas = acessar_dados("contas")
+    
+    if not contas:
+        print("Nenhuma conta cadastrada!")
+        return None
+    
+    total = saldo_total() #chama a outra função
+    quantidade = len(contas)
+    
+    return total / quantidade
