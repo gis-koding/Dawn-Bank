@@ -91,3 +91,6 @@ def Montante(tipo):
         total += montante(agencia03)
         print(f'Montante: R${total:.2f}')
             
+def lista_de_agencias(): #etapa4
+    contas = acessar_dados("contas")
+    return sorted({conta[:2] for conta in contas})
