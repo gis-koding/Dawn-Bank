@@ -99,3 +99,26 @@ def BuscarPorCpf():
 def BuscarCliente(cpf):
     clientes = acessar_dados("clientes")
     return clientes.get(cpf) #devolve o valor dessa chave
+
+
+#Etapa 4!
+def Listar_Clientes():
+    clientes = acessar_dados("clientes")
+    if clientes == {}:
+        print ("nenhum cliente cadastrado")
+        return []
+    else:
+        #"cpf": [nome,conta]
+        cpfs = clientes.keys()
+        lista_dos_dados = [f"Nome: {clientes.get(cpf)[0]} | CPF: {cpf} | Conta: {clientes.get(cpf)[1]}" for cpf in cpfs]
+        contador = 0
+        for item in lista_dos_dados:
+            contador += 1
+            print(f"Cliente número: {contador}: {item}")
+
+    return lista_dos_dados
+
+
+def numero_de_clientes():
+    clientes = acessar_dados("clientes")
+    return len(clientes) 
