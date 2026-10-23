@@ -1,25 +1,34 @@
 import json
 
-DADOS = 'clientes.json'
+DADOSCL = 'clientes.json'
+DADOSCO = 'contas.json' #dicionário {"numconta":{}}
 
-# funcoes que são usadas no html
-
-def salvar_dados(clientes):
-    with open(DADOS, "w", encoding="utf-8") as arquivo: 
-        #o w é write: escrever e o utf mantem a formatação
-        json.dump(clientes, arquivo, indent=4, ensure_ascii=False)
-        #o dump escreve
-        #o ensure ascii mantém acentos e formatação no arq json q será criado
-        #o indent deixa o json elegante para visualização
-
-
-def acessar_dados(): #antigo acessar_lista, p/ carregar json
-    if DADOS == {}:
+def salvar_clientes(REGISTRO):
+    '''Salva em clientes.json os dados atualizados.'''
+    with open(DADOSCL, "w", encoding="utf-8") as arquivo: 
+        json.dump(REGISTRO, arquivo, indent=4, ensure_ascii=False)
+              
+def acessar_clientes():
+    '''Retorna o dicionario mais recente.'''
+    if DADOSCL == {}:
         return {}
-    #carregar lista 
-    with open(DADOS, "r",encoding="utf-8") as arquivo:
+    with open(DADOSCL, "r",encoding="utf-8") as arquivo:
         return json.load(arquivo) #load = le o arqv json
 
 def decimal_ao_jeito_brasileiro(numero): #zero criatividade para criar essa func
     return float(numero.replace(",",".")) #decimal com virgula -> decimal com ponto
 
+def cpf_com_pontinhos(cpf):
+    return cpf.replace(".","").replace("-","").replace(" ", "") #com ponto -> sem ponto, limpissimo
+
+def salvar_contas(REGISTRO):
+    '''Salva em contas.json os dados atualizados.'''
+    with open(DADOSCO, "w", encoding="utf-8") as arquivo: 
+        json.dump(REGISTRO, arquivo, indent=4, ensure_ascii=False)
+              
+def acessar_contas():
+    '''Retorna o dicionário mais recente.'''
+    if DADOSCO == {}:
+        return {}
+    with open(DADOSCO, "r",encoding="utf-8") as arquivo:
+        return json.load(arquivo) #load = le o arqv json

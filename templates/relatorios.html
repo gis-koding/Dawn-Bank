@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANCO DAWN: Sistema de Gerenciamento e Relatórios</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 800px; }
+        h2, h3 { color: #333; text-align: center; }
+        .card { background: #e9ecef; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        .form-section { background: #fdfdfd; border: 1px solid #ddd; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 9px; background-color: #007BFF; color: white; border: none; border-radius: 4px; font-size: 15px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .btn-excluir { background-color: #dc3545; width: auto; padding: 5px 10px; font-size: 13px; }
+        .btn-excluir:hover { background-color: #b02a37; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 14px; }
+        th { background-color: #007BFF; color: white; }
+        .alert { padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center; font-weight: bold; }
+        .alert-success { background-color: #d4edda; color: #155724; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; }
+        .btn-voltar { display: inline-block; background-color: #6c757d; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; text-align: center; width: 100%; box-sizing: border-box; font-weight: bold; }
+        .btn-voltar:hover { background-color: #5a6268; }
+        .badge { display: inline-block; background: #6f42c1; color: white; padding: 4px 8px; border-radius: 4px; margin-right: 5px; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Painel de Gerenciamento</h2>
+    
+    <!-- Mensagens de Feedback -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Estatísticas Gerais-->
+    <div class="card">
+        <h3>Estatísticas</h3>
+        <p><strong>Total de Clientes Cadastrados:</strong> {{ total_clientes }}</p>
+        <p><strong>Total de Contas Ativas:</strong> {{ total_contas }}</p>
+        <p><strong>Saldo Total no Sistema:</strong> R$ {{ "%.2f"|format(total_saldos) }}</p>
+        <p><strong>Saldo Médio por Conta:</strong> R$ {{ "%.2f"|format(media_saldos) }}</p>
+        
+        {% if maior_saldo and menor_saldo %}
+            <p><strong>Conta com Maior Saldo:</strong> Conta {{ maior_saldo[0] }} (R$ {{ "%.2f"|format(maior_saldo[1].saldo) }})</p>
+            <p><strong>Conta com Menor Saldo:</strong> Conta {{ menor_saldo[0] }} (R$ {{ "%.2f"|format(menor_saldo[1].saldo) }})</p>
+        {% endif %}
+
+        <p style="margin-top: 15px;"><strong>Agências Identificadas no Sistema:</strong> 
+            {% if agencias %}
+                {% for ag in agencias %}
+                    <span class="badge">Agência {{ ag }}</span>
+                {% endfor %}
+            {% else %}
+                <span>Nenhuma agência registrada</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Seção de Consultas/Buscas -->
+    <div class="form-section">
+        <h3>Consultar Cliente por CPF</h3>
+        <form action="/buscar_cpf" method="POST">
+            <label>CPF:</label>
+            <input type="text" name="cpf" placeholder="Digite o CPF" required>
+            <button type="submit">Buscar Cliente</button>
+        </form>
+    </div>
+
+    <div class="form-section">
+        <h3>Consultar Conta</h3>
+        <form action="/buscar_conta" method="POST">
+            <label>Número da Conta:</label>
+            <input type="text" name="numconta" placeholder="Digite o nº da conta" required>
+            <button type="submit">Buscar Conta</button>
+        </form>
+    </div>
+
+    <!-- Listagem de Clientes -->
+    <h3>Lista de Clientes</h3>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Conta</th>
+            <th>Ações</th>
+        </tr>
+        {% for cpf, dados in clientes.items() %}
+        <tr>
+            <td>{{ dados.get('nome') }}</td>
+            <td>{{ dados.get('cpf') }}</td>
+            <td>{{ dados.get('numconta', 'N/A') }}</td>
+            <td>
+                <form action="/excluir_cliente" method="POST" style="margin: 0;">
+                    <input type="hidden" name="cpf" value="{{ cpf }}">
+                    <button type="submit" class="btn-excluir">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Listagem de Contas -->
+    <h3>Lista de Contas</h3>
+    <table>
+        <tr>
+            <th>Conta</th>
+            <th>Titular (CPF)</th>
+            <th>Tipo</th>
+            <th>Saldo</th>
+        </tr>
+        {% for numconta, dados in contas.items() %}
+        <tr>
+            <td>{{ numconta }}</td>
+            <td>{{ dados.get('titular') }}</td>
+            <td>{{ dados.get('tipo') }}</td>
+            <td>R$ {{ "%.2f"|format(dados.get('saldo', 0)) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/" class="btn-voltar">Voltar à Página Inicial</a>
+</div>
+
+</body>
+</html>

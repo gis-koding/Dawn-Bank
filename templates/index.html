@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Dawn</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 480px; }
+        h2, h3 { color: #333; text-align: center; }
+        .form-section { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, select { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .alert { padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center; font-weight: bold; }
+        .alert-success { background-color: #d4edda; color: #155724; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; }
+        .alert-info { background-color: #d1ecf1; color: #0c5460; }
+        .alert-warning { background-color: #fff3cd; color: #856404; }
+        .user-card { background: #e9ecef; padding: 15px; border-radius: 6px; margin-bottom: 20px; text-align: center; }
+        .btn-logout { background-color: #dc3545; text-decoration: none; display: inline-block; padding: 8px 12px; color: white; border-radius: 4px; text-align: center; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Banco Dawn</h2>
+
+    <!-- Mensagens Flash (substitui os prints) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Botão de acesso ao gerenciamento -->
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('agencia.relatorios') }}" class="btn-link btn-gerenciamento">⚙️ Acessar Sistema de Gerenciamento</a>
+    </div>
+
+    <!-- Estado de sessão: usuário logado vs deslogado -->
+    {% if cliente %}
+        <div class="user-card">
+            <h3>Bem-vindo, {{ cliente.nome }}!</h3>
+            <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
+            <p><strong>Conta:</strong> {{ conta.numconta if conta else 'Não encontrada' }}</p>
+            <p><strong>Saldo Atual:</strong> R$ {{ "%.2f"|format(conta.saldo) if conta else '0.00' }}</p>
+            <a href="/sair" class="btn-logout">Sair</a>
+        </div>
+
+        <!-- Operações ativas apenas após o login -->
+        <div class="form-section">
+            <h3>Depósito</h3>
+            <form action="/deposito" method="POST">
+                <label>Valor (R$):</label>
+                <input type="text" name="valor" placeholder="100,00" required>
+                <button type="submit">Depositar</button>
+            </form>
+        </div>
+
+        <div class="form-section">
+            <h3>Saque</h3>
+            <form action="/saque" method="POST">
+                <label>Valor (R$):</label>
+                <input type="text" name="valor" placeholder="50,00" required>
+                <button type="submit">Sacar</button>
+            </form>
+        </div>
+
+        <div class="form-section">
+            <h3>Pix / Transferência</h3>
+            <form action="/pix" method="POST">
+                <label>CPF do Destino:</label>
+                <input type="text" name="destino" placeholder="00000000000" required>
+                <label>Valor (R$):</label>
+                <input type="text" name="valor" placeholder="25,00" required>
+                <button type="submit">Enviar Pix</button>
+            </form>
+        </div>
+
+    {% else %}
+
+        <!-- Seção: Entrar -->
+        <div class="form-section">
+            <h3>Entrar na Conta</h3>
+            <form action="/entrar" method="POST">
+                <label>CPF:</label>
+                <input type="text" name="cpf" placeholder="Digite seu CPF" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+
+        <!-- Seção: Registrar -->
+        <div class="form-section">
+            <h3>Registrar Novo Cliente</h3>
+            <form action="/registrar" method="POST">
+                <label>Nome:</label>
+                <input type="text" name="nome" placeholder="Digite seu nome completo" required>
+                <label>CPF:</label>
+                <input type="text" name="cpf" placeholder="Digite seu CPF" required>
+                <label>Tipo de Conta:</label>
+                <select name="tipo" required>
+                    <option value="corrente">Conta Corrente</option>
+                    <option value="poupança">Conta Poupança</option>
+                    <option value="salario">Conta Salário</option>
+                </select>
+                <button type="submit">Cadastrar e Entrar</button>
+            </form>
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

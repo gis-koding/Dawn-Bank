@@ -1,5 +1,5 @@
 from old.biblioteca import *
-from old.cliente import *
+from cliente import *
 from old.conta import *
 from old.menus import *
 

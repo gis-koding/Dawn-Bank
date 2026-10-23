@@ -1,7 +1,7 @@
 from old.biblioteca import *
-from old.conta import *
-from old.cliente import *
-from old.agencia import *
+from conta import *
+from cliente import *
+from agencia import *
 
 def MenuCliente(conta,dadosconta):
 

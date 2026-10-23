@@ -1,1 +1,27 @@
-[]
+{
+    "02809105090": {
+        "nome": "Taynara Souza de Lima",
+        "cpf": "02809105090",
+        "numconta": "02280915"
+    },
+    "48079762066": {
+        "nome": "Habriel Fraga",
+        "cpf": "48079762066",
+        "numconta": "01480797"
+    },
+    "59019049070": {
+        "nome": "Anny Maria Filipina",
+        "cpf": "59019049070",
+        "numconta": "03590190"
+    },
+    "64287592093": {
+        "nome": "Aline Vieira",
+        "cpf": "64287592093",
+        "numconta": "01642875"
+    },
+    "16819755058": {
+        "nome": "Fulaninho Fagundes",
+        "cpf": "16819755058",
+        "numconta": "03168197"
+    }
+}

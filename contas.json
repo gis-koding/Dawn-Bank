@@ -1,0 +1,32 @@
+{
+    "02280915": {
+        "titular": "02809105090",
+        "numconta": "02280915",
+        "tipo": "corrente",
+        "saldo": 25.130000000000003
+    },
+    "01480797": {
+        "titular": "48079762066",
+        "numconta": "01480797",
+        "tipo": "salario",
+        "saldo": 18100.13
+    },
+    "03590190": {
+        "titular": "59019049070",
+        "numconta": "03590190",
+        "tipo": "poupança",
+        "saldo": 200000.13
+    },
+    "01642875": {
+        "titular": "64287592093",
+        "numconta": "01642875",
+        "tipo": "salario",
+        "saldo": 0.13
+    },
+    "03168197": {
+        "titular": "16819755058",
+        "numconta": "03168197",
+        "tipo": "poupança",
+        "saldo": 0.13
+    }
+}
