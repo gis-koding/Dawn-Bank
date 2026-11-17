@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from biblioteca import *
 from cliente import *
 from agencia import *
-from conta import *
+from oldconta import *
 
 app = Flask(__name__)
 app.secret_key = "chavinho"  # para gerenciar sessões e mensagens flash/print

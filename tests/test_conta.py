@@ -1,5 +1,5 @@
 import pytest
-from old.tests.a_ser_testado import decimal_ao_jeito_brasileiro
+from tests.a_ser_testado import decimal_ao_jeito_brasileiro
 
 
 '''dois testes nesse arquivo: 
