@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from biblioteca import cpf_com_pontinhos
+from biblioteca import cpf_com_pontinhos, decimal_ao_jeito_brasileiro
 from agencia import agencia, agencia_unica
 from cliente import Cliente
 
@@ -71,6 +71,65 @@ def Sair():
     flash("Você saiu da conta.", "info")
     return redirect(url_for("index"))
 
+
+@app.route("/deposito", methods=["POST"])
+def Deposito():
+    cliente_logado = session.get("cliente_logado")
+    if not cliente_logado:
+        return redirect(url_for("index"))
+    
+    # Pega o valor que o usuário digitou no HTML e converte para número
+    valor = decimal_ao_jeito_brasileiro(request.form.get("valor"))
+    
+    # Busca a conta do cliente na memória
+    conta = agencia_unica.buscar_conta(cliente_logado.get("numconta"))
+    
+    if conta:
+        conta.deposito(valor) # Chama o método da classe Conta
+        agencia_unica.salvar_json() # Salva no arquivo JSON
+        
+    return redirect(url_for("index"))
+
+
+@app.route("/saque", methods=["POST"])
+def Saque():
+    cliente_logado = session.get("cliente_logado")
+    if not cliente_logado:
+        return redirect(url_for("index"))
+    
+    valor = decimal_ao_jeito_brasileiro(request.form.get("valor"))
+    conta = agencia_unica.buscar_conta(cliente_logado.get("numconta"))
+    
+    if conta:
+        conta.saque(valor) # Chama o método da classe Conta
+        agencia_unica.salvar_json()
+        
+    return redirect(url_for("index"))
+
+
+@app.route("/pix", methods=["POST"])
+def Pix():
+    cliente_logado = session.get("cliente_logado")
+    if not cliente_logado:
+        return redirect(url_for("index"))
+    
+    valor = decimal_ao_jeito_brasileiro(request.form.get("valor"))
+    cpf_destino = cpf_com_pontinhos(request.form.get("destino"))
+    
+    conta_origem = agencia_unica.buscar_conta(cliente_logado.get("numconta"))
+    cliente_destino = agencia_unica.buscar_cliente(cpf_destino)
+    
+    # Verifica se a conta de origem existe e se o cliente destino tem conta
+    if conta_origem and cliente_destino and cliente_destino.contas:
+        conta_destino = cliente_destino.contas[0] # Pega a primeira conta do destino
+        
+        # Chama o método pix passando o valor e o OBJETO da conta destino
+        conta_origem.pix(valor, conta_destino)
+        agencia_unica.salvar_json()
+    else:
+        flash("Conta de destino não encontrada ou inválida.", "danger")
+        
+    return redirect(url_for("index"))
 
 if __name__ == '__main__':
     print("Servidor iniciado em http://127.0.0.1:5000")

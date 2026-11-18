@@ -45,33 +45,33 @@ class Conta_Corrente(Conta):
                 self.saldo += valor
                 flash(f"Depósito de R$ {valor:.2f} realizado com sucesso!", "success")
 
-    def saque(self,valor):
+    def saque(self, valor):
         if valor <= 0:
             flash("Valor inválido para saque.", "danger")
+        elif valor > (self.saldo + self.especial):
+            flash("Saldo e cheque especial insuficientes.", "danger")
         else:
-            if valor < self.saldo:
-                self.saldo -= valor
-                flash(f"Saque de  R$ {valor:.2f} realizado com sucesso!", "success")
-            elif valor > self.saldo and self.especial > valor:
-                self.especial -= valor
-                flash(f"Saque de  R$ {valor:.2f} realizado com sucesso!(do cheque especial)", "success")
+            self.saldo -= valor
+            # Se o saldo ficou negativo, significa que usou o cheque especial
+            if self.saldo < 0:
+                self.especial += self.saldo # O especial paga a diferença
+                self.saldo = 0
+                flash(f"Saque de R$ {valor:.2f} realizado com sucesso (usou cheque especial)!", "success")
             else:
-                flash("Saldo insuficiente para transferência.", "danger")
-                
-    def pix(self,valor,saldo_destino):
+                flash(f"Saque de R$ {valor:.2f} realizado com sucesso!", "success")
+    
+    def pix(self, valor, conta_destino):
         if valor <= 0:
             flash("Valor inválido para transferência.", "danger")
+        elif valor > (self.saldo + self.especial):
+            flash("Saldo insuficiente para transferência.", "danger")
         else:
-            if self.saldo < valor and self.especial < valor:
-                flash("Saldo insuficiente para transferência.", "danger")
-            elif self.saldo > valor:
-                self.saldo -= valor
-                saldo_destino += valor
-                flash(f"Pix de R$ {valor:.2f} enviado com sucesso!", "success")
-            else:
-                self.especial -= valor
-                saldo_destino += valor
-                flash(f"Pix de R$ {valor:.2f} enviado com sucesso!(do cheque especial)", "success")
+            self.saldo -= valor
+            if self.saldo < 0:
+                self.especial += self.saldo
+                self.saldo = 0
+            conta_destino.saldo += valor 
+            flash(f"Pix de R$ {valor:.2f} enviado com sucesso!", "success")
 
 class Conta_Poupança(Conta):
     def __init__(self, titular, numconta, saldo):
@@ -88,22 +88,22 @@ class Conta_Poupança(Conta):
 
     def saque(self, valor):
         if valor <= 0:
-            flash("Saldo insuficiente ou valor inválido para saque.", "danger")
+            flash("Valor inválido para saque.", "danger")
+        elif valor > self.saldo: # <--- Verifica se tem saldo!
+            flash("Saldo insuficiente para saque.", "danger")
         else:
              self.saldo -= valor
-             flash(f"Saque de  R$ {valor:.2f} realizado com sucesso!", "success")
+             flash(f"Saque de R$ {valor:.2f} realizado com sucesso!", "success")
 
     def rendimento(self):
         self.saldo += self.saldo * 0.05 #rendimento de 5% ao mês
      
-    def pix(self, valor, saldo_destino):
+    def pix(self, valor, conta_destino):
         if valor <= 0:
             flash("Valor inválido para transferência.", "danger")
+        elif valor > self.saldo:
+            flash("Saldo insuficiente para transferência.", "danger")
         else:
-            if self.saldo < valor:
-                flash("Saldo insuficiente para transferência.", "danger")
-            else:
-                self.saldo -= valor
-                saldo_destino += valor
-                flash(f"Pix de R$ {valor:.2f} enviado com sucesso!", "success")
-
+            self.saldo -= valor
+            conta_destino.saldo += valor 
+            flash(f"Pix de R$ {valor:.2f} enviado com sucesso!", "success")

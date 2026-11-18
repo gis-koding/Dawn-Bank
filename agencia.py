@@ -123,26 +123,35 @@ class Agencia:
     #cadastroclientes direto no html
     #obs: o abrir_conta é o antigo CriarConta, preciso para definir se corrente ou poupança !
     def abrir_conta(self, cliente, tipo, saldo_inicial=0.13):
-        '''Abre uma conta (corrente ou poupança) usando a regra de CPF da equipe.'''
 
         tipo = tipo.lower() #deixa tudo minusculo
-        num_base = str(int(cliente.cpf) // 100000)
+
         if tipo == "corrente":
-            numconta = "02" + num_base
+            prefixo = "02"
         elif tipo in ("poupanca", "poupança"):
-            numconta = "03" + num_base
+            prefixo = "03"
         else:
-            # qlq tipo de conta !
             print(f"Tipo de conta '{tipo}' não é permitido.")
             return None
-        while len(numconta) < 8:
-            numconta = numconta + "5"
-        # colocando em POO:
+        maior_numero = 0
+        for conta in self.contas:
+            numero_atual = int(conta.numconta[2:])
+            if numero_atual > maior_numero:
+                maior_numero = numero_atual
+                
+        proximo_numero = str(maior_numero + 1)
+        while len(proximo_numero) < 6:
+            proximo_numero = "0" + proximo_numero
+            
+        #Junta o prefixo com o número final
+        numconta = prefixo + proximo_numero
+        
         if tipo == "corrente":
             nova_conta = Conta_Corrente(cliente, numconta, saldo_inicial)
         else:
             nova_conta = Conta_Poupança(cliente, numconta, saldo_inicial)
-        #guardamos em agencia e cliente.
+            
+        # Guarda em agencia e cliente
         self.contas.append(nova_conta)
         cliente.contas.append(nova_conta)
 

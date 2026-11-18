@@ -50,8 +50,8 @@
         <p><strong>Saldo Médio por Conta:</strong> R$ {{ "%.2f"|format(media_saldos) }}</p>
         
         {% if maior_saldo and menor_saldo %}
-            <p><strong>Conta com Maior Saldo:</strong> Conta {{ maior_saldo[0] }} (R$ {{ "%.2f"|format(maior_saldo[1].saldo) }})</p>
-            <p><strong>Conta com Menor Saldo:</strong> Conta {{ menor_saldo[0] }} (R$ {{ "%.2f"|format(menor_saldo[1].saldo) }})</p>
+            <p><strong>Conta com Maior Saldo:</strong> Conta {{ maior_saldo.numconta }} (R$ {{ "%.2f"|format(maior_saldo.saldo) }})</p>
+            <p><strong>Conta com Menor Saldo:</strong> Conta {{ menor_saldo.numconta }} (R$ {{ "%.2f"|format(menor_saldo.saldo) }})</p>
         {% endif %}
 
         <p style="margin-top: 15px;"><strong>Agências Identificadas no Sistema:</strong> 
@@ -93,14 +93,14 @@
             <th>Conta</th>
             <th>Ações</th>
         </tr>
-        {% for cpf, dados in clientes.items() %}
+        {% for cliente in clientes %}
         <tr>
-            <td>{{ dados.get('nome') }}</td>
-            <td>{{ dados.get('cpf') }}</td>
-            <td>{{ dados.get('numconta', 'N/A') }}</td>
+            <td>{{ cliente.nome }}</td>
+            <td>{{ cliente.cpf }}</td>
+            <td>{{ cliente.contas[0].numconta if cliente.contas else 'N/A' }}</td>
             <td>
                 <form action="/excluir_cliente" method="POST" style="margin: 0;">
-                    <input type="hidden" name="cpf" value="{{ cpf }}">
+                    <input type="hidden" name="cpf" value="{{ cliente.cpf }}">
                     <button type="submit" class="btn-excluir">Excluir</button>
                 </form>
             </td>
@@ -117,12 +117,12 @@
             <th>Tipo</th>
             <th>Saldo</th>
         </tr>
-        {% for numconta, dados in contas.items() %}
+        {% for conta in contas %}
         <tr>
-            <td>{{ numconta }}</td>
-            <td>{{ dados.get('titular') }}</td>
-            <td>{{ dados.get('tipo') }}</td>
-            <td>R$ {{ "%.2f"|format(dados.get('saldo', 0)) }}</td>
+            <td>{{ conta.numconta }}</td>
+            <td>{{ conta.titular.cpf }}</td>
+            <td>{{ conta.tipo }}</td>
+            <td>R$ {{ "%.2f"|format(conta.saldo) }}</td>
         </tr>
         {% endfor %}
     </table>
