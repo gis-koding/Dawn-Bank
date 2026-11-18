@@ -333,7 +333,7 @@ agencia = Blueprint('agencia', __name__)
 
 
 def AdicionarCliente(nome,cpf):
-    '''Adiciona cliente no banco de dados.'''
+    #Adiciona cliente no banco de dados.
 
     clientes = acessar_clientes()
     if cpf in clientes:
@@ -345,7 +345,7 @@ def AdicionarCliente(nome,cpf):
 #cadastroclientes direto no html
 
 def ValidarCPF(cpf):
-    '''Verifica se o cpf está no formato padrão.'''
+    #Verifica se o cpf está no formato padrão.
 
     #formatação de cpf adicionada na biblioteca
     if len(cpf) != 11 or not cpf.isdigit():
@@ -395,7 +395,7 @@ def ValidarCPF(cpf):
 
 
 def lista_de_agencias(): #etapa4
-    '''Verifica as agências existentes. Sem cliente, sem agência.'''
+    #Verifica as agências existentes. Sem cliente, sem agência.
     contas = acessar_contas()
     return sorted({conta[:2] for conta in contas})
 

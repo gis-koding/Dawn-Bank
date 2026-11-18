@@ -34,6 +34,7 @@ class Conta_Corrente(Conta):
     def __init__(self, titular, numconta, saldo,especial=200):
         super().__init__(titular, numconta, saldo)
         self.especial = especial
+        self.tipo = "corrente" #para salvar no dict json 
         #cheque especial é um saldo separado que só pode ser usado quando saldo é menor do que o valor da op
 
     def deposito(self, valor):
@@ -75,6 +76,7 @@ class Conta_Corrente(Conta):
 class Conta_Poupança(Conta):
     def __init__(self, titular, numconta, saldo):
         super().__init__(titular, numconta, saldo)
+        self.tipo = "corrente" #para salvar nos json 
 
     def deposito(self, valor):
      #valor não é atributo, definido toda vez que chamarmos a funcao

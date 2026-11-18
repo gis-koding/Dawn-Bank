@@ -1,5 +1,3 @@
-from main import *
-
 #CadastroCliente integrado em AdicionarCliente => ok, adicionar_cliente é um método em agencia
 #AdicionarCliente, ListarClientes, ValidarCPF, Listagem dos clientes/conta e buscas por cpf/conta é função da agencia.
 # => ListarClientes está no html de agencia; 
