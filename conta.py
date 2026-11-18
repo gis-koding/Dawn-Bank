@@ -76,7 +76,7 @@ class Conta_Corrente(Conta):
 class Conta_Poupança(Conta):
     def __init__(self, titular, numconta, saldo):
         super().__init__(titular, numconta, saldo)
-        self.tipo = "corrente" #para salvar nos json 
+        self.tipo = "poupança" #para salvar nos json 
 
     def deposito(self, valor):
      #valor não é atributo, definido toda vez que chamarmos a funcao

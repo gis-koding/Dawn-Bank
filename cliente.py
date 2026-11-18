@@ -10,4 +10,7 @@ class Cliente:
 
     #transforma o objeto em dicionário só para salvar no json
     def to_dict(self):
-        return {"nome": self.nome, "cpf": self.cpf}
+        dados = {"nome": self.nome, "cpf": self.cpf}
+        if self.contas: # Se o cliente tiver pelo menos uma conta, pega o número da primeira
+            dados["numconta"] = self.contas[0].numconta
+        return dados
